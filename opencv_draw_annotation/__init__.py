@@ -1,23 +1,27 @@
 import cv2
+from .colors import convert_color
 
-def hex_to_BGR(x):
-    return (int(x[5:7], base=16), int(x[3:5], base=16), int(x[1:3], base=16))
 
 def draw_bounding_box(frame, 
                       box, 
                       labels=[], 
-                      color=(60, 76, 231), 
+                      color='red', 
                       font_face = cv2.FONT_HERSHEY_DUPLEX, 
                       font_scale = .5, 
                       font_weight = 1,
-                      font_color = (255,255,255),
+                      font_color = 'white',
                       text_padding = 3,
                       border_thickness = 2
                       ):
 
+       
+    color = convert_color(color)
+    font_color = convert_color(font_color)
+
+    box = [int(x) for x in box]
     xmin,ymin,xmax,ymax = box
-    xmin,ymin,xmax,ymax = int(xmin),int(ymin),int(xmax), int(ymax)
-     
+    
+    #draw bounding box
     frame = cv2.rectangle(frame, (xmin,ymin), (xmax, ymax), color, border_thickness)
 
     text_dims = [cv2.getTextSize(x, font_face, font_scale, font_weight) for x in labels]
@@ -27,6 +31,10 @@ def draw_bounding_box(frame,
 
     label_xmin = xmin - border_offset
     label_ymin = ymin - total_label_height - border_offset
+    if label_ymin < 0:
+        label_ymin = ymax + border_offset
+
+
     for i,label in enumerate(labels):
 
         text_width = text_dims[i][0][0]
@@ -38,12 +46,8 @@ def draw_bounding_box(frame,
         label_ymax = label_ymin + label_height
 
         cv2.rectangle(frame, (label_xmin, label_ymin), (label_xmax, label_ymax), color, -1)
-        cv2.putText(frame, label,(label_xmin + text_padding, label_ymin + text_height + text_baseline), font_face, font_scale,(255,255,255), font_weight, cv2.LINE_AA)
+        cv2.putText(frame, label,(label_xmin + text_padding, label_ymin + text_height + text_padding), font_face, font_scale,(255,255,255), font_weight, cv2.LINE_AA)
         
         label_ymin = label_ymax
         
        
-
-
-    #cv2.rectangle(frame, (xmin - (border_thickness//2),ymin - baseline - text_height - text_padding * 2 - border_thickness // 2), (xmin + text_width + text_padding * 2, ymin), color, -1)
-    #cv2.putText(frame, labels[0],(xmin - border_thickness + text_padding ,ymin - baseline - text_padding ), font_face, font_scale,(255,255,255), font_weight, cv2.LINE_AA)
