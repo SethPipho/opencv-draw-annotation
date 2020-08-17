@@ -8,7 +8,7 @@ image.fill(255)
 
 draw_bounding_box(image, (100,100,200,200), labels=['Test','This is a label'])
 
-draw_bounding_box(image, (100,300,200,400), labels=['Larger Font Size'], font_scale=.75)
+draw_bounding_box(image, (100,300,200,400), labels=['Larger Font Size'], font_size=.75)
 
 draw_bounding_box(image, (100,500,200,600), labels=['More Padding', 'text_padding = 10'], text_padding=10)
 
