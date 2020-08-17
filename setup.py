@@ -7,9 +7,9 @@ setup(
     author_email='seth.pipho@gmail.com',
     packages=['opencv_draw_annotation'],
     scripts=[],
-    url='http://pypi.python.org/pypi/PackageName/',
-    license='LICENSE',
-    description='A library for formatting and drawing annotations, such as bounding boxes, text boxes, and trails',
+    url='https://github.com/SethPipho/opencv-draw-annotation',
+    license='MIT',
+    description='A library for formatting and drawing annotations (e.g. bounding boxes) on images using opencv',
     long_description=open('README.md').read(),
     install_requires=["opencv-python"],
 )
